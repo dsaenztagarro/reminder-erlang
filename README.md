@@ -4,7 +4,8 @@ Compile from erlang shell with: `make:all([load])`
 
 # Run application
 
-Without supervisor (0.0.1)
+Without supervisor
+------------------
 
 ```erlang
 > evserv:start().
@@ -15,4 +16,24 @@ Without supervisor (0.0.1)
 ok
 > evserv:listen(5).
 [{done,"Hey there","test"}]
+```
+
+With supervisor
+---------------
+
+```erlang
+1> SupPid = sup:start(evserv, []).
+<0.35.0>
+2> whereis(evserv).
+<0.36.0>
+3> exit(whereis(evserv), die).
+Process <0.36.0> exited for reason die
+true
+4> exit(whereis(evserv), die).
+Process <0.39.0> exited for reason die
+true
+5> exit(SupPid, shutdown).
+true
+6> whereis(evserv).
+undefined
 ```
